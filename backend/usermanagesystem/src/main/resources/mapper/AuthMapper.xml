@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.backend.usermanagesystem.repository.auth.AuthRepository">
+    	
+    	<resultMap id="AuthResultMap" type="Users">
+    		<id column="user_id" property="user_id" />
+    		<result column="username" property="username" />
+    		<result column="email" property="email" />
+    		<result column="password" property="password" />
+    		<result column="city" property="city" />
+    		<result column="role_name" property="role" />
+    	</resultMap>
+    	
+    	<select id="findByEmail" resultMap="AuthResultMap" parameterType="String">
+    		SELECT users.user_id, users.username, users.password, users.email, users.city, roles.role_name FROM users INNER JOIN roles ON users.role_id = roles.role_id WHERE users.email=#{email}; 
+    	</select>
+    	
+    	<insert id="accSave" parameterType="Users">
+    		INSERT INTO users (username, email, password, city, role_id) VALUES (#{username}, #{email}, #{password}, #{city}, #{role_id});
+    	</insert>
+    	
+    </mapper>
